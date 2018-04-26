@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+<canvas id="superCanvas" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+<script type="text/javascript">
+	window.onload = function(){
+		var cvs = document.getElementById('superCanvas');
+		if(!cvs.getContext) return;
+		cvs.width=400;
+		cvs.height = 400;
+		// 开始你的精彩表演......
+		var ctx = cvs.getContext('2d');
+		
+		// 设置画笔状态,创建路径
+		//开始绘制
+       ctx.lineWidth=10;
+       ctx.strokeStyle="red";
+
+		// 圆角
+       ctx.beginPath();
+      	ctx.lineJoin = 'round';
+      	ctx.moveTo(20,20);
+      	ctx.lineTo(300,40);
+      	ctx.lineTo(20,60)
+       ctx.stroke();
+       
+       // 斜角
+       ctx.beginPath();
+       ctx.lineJoin='bevel';
+       ctx.moveTo(20,100);
+       ctx.lineTo(300,120);
+       ctx.lineTo(20,140);
+       ctx.stroke();
+		
+		// 默认，尖角，lineJoin和miterLimit需要配合使用
+		ctx.beginPath();
+		ctx.lineJoin="miter";
+		ctx.miterLimit=15;
+		ctx.moveTo(20,180);
+		ctx.lineTo(300,200);
+		ctx.lineTo(20,220)
+		ctx.stroke();
+		
+	}
+</script>
+	</body>
+</html>

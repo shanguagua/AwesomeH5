@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<canvas id="superCanvas" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<script type="text/javascript">
+			window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 400;
+				cvs.height = 400;
+				// 开始你的精彩表演......
+				var ctx = cvs.getContext('2d');
+				
+				var gradient = ctx.createLinearGradient(0,0,1000,1000);
+				gradient.addColorStop('0','red');
+				gradient.addColorStop('0.5','blue');  
+				gradient.addColorStop('1','gold');
+				
+				drawStar(ctx,75, 150, 200, 200, 5, 0, gradient, 'fill')
+				
+				function drawStar(ctx, r, R, x, y, w, rot, color, type) {
+					ctx.beginPath();
+					var rot1 = rot || 0;
+					for(var i = 0; i <= 5; i++) {
+						ctx.lineTo(Math.cos((18 + i * 72 - rot1) / 180 * Math.PI) * R + x, -Math.sin((18 + i * 72 - rot1) / 180 * Math.PI) * R + y)
+						ctx.lineTo(Math.cos((54 + i * 72 - rot1) / 180 * Math.PI) * r + x, -Math.sin((54 + i * 72 - rot1) / 180 * Math.PI) * r + y)
+					}
+					if(type == 'fill') {  // fill
+						ctx.fillStyle = color;
+						ctx.fill();
+					} else {  // stroke
+						ctx.lineWith = w || 5;
+						ctx.strokeStyle = color
+						ctx.stroke();
+					}
+				}
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+<canvas id="superCanvas" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+<script type="text/javascript">
+	window.onload = function(){
+		var cvs = document.getElementById('superCanvas');
+		if(!cvs.getContext) return;
+		cvs.width=400;
+		cvs.height = 400;
+		// 开始你的精彩表演......
+		var ctx = cvs.getContext('2d');
+		
+		// 绘制简单的矩形
+		ctx.fillStyle='blue'
+		
+		ctx.rect(20,20,300,300);
+		ctx.fill();
+		
+		// 清除
+		ctx.clearRect(50,50,50,50);
+		ctx.clearRect(100,100,50,50);
+		ctx.clearRect(150,150,50,50);
+	}
+</script>
+	</body>
+</html>

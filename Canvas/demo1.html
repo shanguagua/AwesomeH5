@@ -22,8 +22,11 @@
 		}
 		window.onload = function(){
 			var cvs = document.getElementById('superCanvas');
+			if(!cvs.getContext) return;
 			cvs.width=1024;
 			cvs.height = 768;
+			 
+			
 			
 			var ctx = cvs.getContext('2d');
 			
