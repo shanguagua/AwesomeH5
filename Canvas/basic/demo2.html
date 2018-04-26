@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+
+		<canvas id="myCanvas" width="800" height="600">你的浏览器不支持canvas</canvas>
+
+	</body>
+	<script>
+		var cvs = document.getElementById('myCanvas');
+		var ctx = cvs.getContext('2d');
+
+		ctx.beginPath();
+		ctx.moveTo(100.5,20.5);
+		ctx.lineTo(200.5,20.5);
+		ctx.stroke();
+		ctx.moveTo(100.5,40.5);
+		ctx.lineTo(200.5,40.5)
+		ctx.strokeStyle = '#f00';
+		ctx.stroke();
+	</script>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<canvas id="canvas" style="border: 1px solid #aaa;display: block;margin: 50px auto;"></canvas>
+		
+		<script type="text/javascript">
+			window.onload = function(){
+				var canvas = document.getElementById('canvas');
+				canvas.width = 400;
+				canvas.height = 400;
+				
+				var context = canvas.getContext('2d');
+				
+				context.lineWidth= 10;
+				context.strokeStyle = 'red';
+				context.moveTo(100,100);  // 只是描绘了状态,没有真正的绘图哦
+				context.lineTo(300,300);  // 只是描绘了状态,没有真正的绘图哦
+				context.stroke(); // 具体的绘制
+			}
+		</script>
+	</body>
+</html>
