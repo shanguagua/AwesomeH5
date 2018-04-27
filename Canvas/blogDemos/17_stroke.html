@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<canvas id="superCanvas" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<script type="text/javascript">
+			window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 400;
+				cvs.height = 400;
+				// 开始你的精彩表演
+				var ctx = cvs.getContext('2d');
+				
+				ctx.save();
+				ctx.beginPath();
+				
+				// 先创建状态
+				ctx.fillStyle = 'blue'
+				ctx.lineWidth = 10;
+				ctx.lineCap = 'square';
+				ctx.strokeStyle = 'red'
+				ctx.moveTo(20,20);
+				ctx.lineTo(200,20);
+				ctx.lineTo(380,100);
+				ctx.lineTo(320,380);
+				ctx.lineTo(100,300);
+				ctx.lineTo(20,20);
+				
+				// 进行实际的绘图
+				ctx.stroke();
+				ctx.fill()
+				
+				ctx.restore();
+			}
+		</script>
+	</body>
+</html>;

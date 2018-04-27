@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<canvas id="superCanvas" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<script type="text/javascript">
+			window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 400;
+				cvs.height = 300;
+				// 开始你的精彩表演
+				var ctx = cvs.getContext('2d');
+				
+				ctx.lineWidth = 10;
+				// 现在需要绘制三条线段
+				// 不使用beginPath的情况,可以看出，三条颜色都是一样的。
+				ctx.save();
+				
+				ctx.strokeStyle = 'blue'
+				ctx.moveTo(20,20);
+				ctx.lineTo(320,20);
+				ctx.stroke();
+				
+				ctx.strokeStyle = 'yellow'
+				ctx.moveTo(20,60);
+				ctx.lineTo(320,60);
+				ctx.stroke();
+				
+				ctx.strokeStyle = 'gold'
+				ctx.moveTo(20,100);
+				ctx.lineTo(320,100)
+				ctx.stroke()    
+				ctx.restore();
+				
+				ctx.save();
+				// 使用beginPath
+				ctx.beginPath()
+				ctx.strokeStyle = 'red'
+				ctx.moveTo(20,140);
+				ctx.lineTo(320,140);
+				ctx.stroke();
+				
+				ctx.beginPath()
+				ctx.strokeStyle = 'greenyellow'
+				ctx.moveTo(20,180);
+				ctx.lineTo(320,180);
+				ctx.stroke();
+				
+				ctx.beginPath();
+				ctx.strokeStyle = 'aqua';
+				ctx.moveTo(20,220);
+				ctx.lineTo(320,220)
+				ctx.stroke()    
+				ctx.restore();
+			}
+		</script>
+	</body>
+</html>;

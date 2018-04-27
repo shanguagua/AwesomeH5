@@ -1,27 +1,77 @@
-<!DOCTYPE html>
-<html>
-
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-	</head>
-
-	<body>
-		<canvas id="superCanvas" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
-		<script type="text/javascript">
-			window.onload = function() {
-				var cvs = document.getElementById('superCanvas');
-				if(!cvs.getContext) return;
-				cvs.width = 400;
-				cvs.height = 400;
-				// 开始你的精彩表演......
-				var ctx = cvs.getContext('2d');
-				
-				// 填充纯颜色
-				ctx.fillStyle="#FF0000";
-				ctx.rect(10,10,100,100);
-				ctx.stroke();
-				ctx.fill();
-		</script>
-	</body>
-</html>
+<h2>
+	一、颜色、样式和阴影
+</h2>
+<span> 前面我们对Canvas的线条样式和如何绘制矩形有了个了解，能绘制简单的图形了，是不是觉得Canvas很酷炫呢？让我们进一步来了解Canvas相关API吧。</span><span> 颜色样式和阴影相关的API有10个，它们用于设置画笔的颜色，给新路径添加背景颜色和阴影等。注意，它们都是状态，是‘我要这样做’这种行为，是要做还没有做的状态，需要使用stroke()和fill()来完成这种想法。</span> 
+<blockquote>
+	1、fillStyle
+</blockquote>
+<span> fillStyle 属性设置或返回用于填充绘画的颜色、渐变或模式。</span><span> 语法：context.fillStyle=color|gradient|pattern;默认值#000000。color描述绘制填充的颜色，gradient描述用于填充绘图的渐变对象，pattern描述用于填充绘图的pattern对象。</span><span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/9_fillStyle.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/9_fillStyle.html" target="_blank">新窗口查看效果:</a>)</span> 
+<iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/9_fillStyle.html" frameborder="0">
+</iframe>
+<blockquote>
+	2、strokeStyle
+</blockquote>
+<span> fillStyle属性设置或返回用于填充绘画的颜色、渐变或模式。</span><span> 语法：context.fillStyle=color|gradient|pattern;默认值#000000。color描述绘制填充的颜色，gradient描述用于填充绘图的渐变对象，pattern描述用于填充绘图的pattern对象。</span><span> 与fillStyle的区别是strokeStyle是设置触笔的！</span><span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/10_strokeStyle.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/10_strokeStyle.html" target="_blank">新窗口查看效果:</a>)</span>
+<iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/10_strokeStyle.html" frameborder="0">
+</iframe>
+<span> 注意，在画图之前最好使用ctx.save()保存一下当前环境的状态，画图完毕使用ctx.restore()返回之前保存过的路径状态和属性。</span>
+<blockquote>
+	3、shadowColor,shadowBlur,shadowOffsetX,shadowOffsetY
+</blockquote>
+<span> shadowColor属性——设置或返回用于阴影的颜色。注意：请将 shadowColor 属性与shadowBlur属性一起使用，来创建阴影。通过使用shadowOffsetX 和 shadowOffsetY 属性来调节阴影效果。</span><span> 语法：context.shadowColor=color;默认颜色是#000000。</span><span> shadowBlur属性——设置或返回阴影的模糊级数。</span><span> 语法：context.shadowBlur=number;阴影的模糊级数。</span><span> shadowOffsetX属性——shadowOffsetX属性设置或返回阴影与形状的水平距离。</span><span> 语法：context.shadowOffsetX=number;number为零，阴影位于形状的正下方，number为正值，阴影位于右侧，number为负值，阴影位于左侧。</span><span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/11_shadow-all.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/11_shadow-all.html" target="_blank">新窗口查看效果:</a>)</span>
+<iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/11_shadow-all.html" frameborder="0">
+</iframe>
+<span> 小结：因为canvas是基于状态的，之前设置的状态如果没有被覆盖它会一直起作用的，所以我们画图的时候应该让画笔恢复到最初的状态，所以需要使用save来保存状态，restore()来恢复状态。此外如果需要开始一个新的绘制，请在之前使用beginPath()。</span> 
+<blockquote>
+	4、createLinearGradient(),createPattern()
+</blockquote>
+<span> createLinearGradient()方法创建线性的渐变对象。渐变可用于填充矩形、圆形、线条、文本等等。这个对象可以作为strokeStyle或fillStyle属性的值。addColorStop()方法规定不同的颜色，以及在gradient对象中的何处定位颜色。</span> <span> 语法：context.createLinearGradient(x0,y0,x1,y1);x0,y0代表渐变开始点x的坐标，x1,y1代表渐变结束点的坐标。</span><span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/12_linearGradientPattern.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/12_linearGradientPattern.html" target="_blank">新窗口查看效果:</a>)</span>
+<blockquote>
+	5、createRadialGradient()，addColorStop()
+</blockquote>
+<span> createRadialGradient()方法——创建放射状/圆形渐变对象。渐变可用于填充矩形、圆形、线条、文本等等。使用该对象作为 strokeStyle 或 fillStyle 属性的值。使用 addColorStop() 方法规定不同的颜色，以及在 gradient 对象中的何处定位颜色。</span><span> 语法：context.createRadialGradient(x0,y0,r0,x1,y1,r1);x0,y0是渐变开始圆的坐标，r0是开始圆的半径，x1,y1是结束圆的坐标，r1是结束圆的半径。</span><span> addColorStop() 方法——规定渐变对象中的颜色和位置。addColorStop() 方法与 createLinearGradient()或createRadialGradient() 一起使用可以多次调用 addColorStop() 方法来改变渐变。如果您不对渐变对象使用该方法，那么渐变将不可见。为了获得可见的渐变，您需要创建至少一个色标。</span><span> 语法：gradient.addColorStop(stop,color);stop介于 0.0 与 1.0 之间的值，表示渐变中开始与结束之间的位置。color是颜色值。</span><span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/13_createRadialGradient.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/13_createRadialGradient.html" target="_blank">新窗口查看效果:</a>)</span>
+<iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/13_createRadialGradient.html" frameborder="0">
+</iframe>
+<h2>
+	二、文本
+</h2>
+<blockquote>
+	1、font,textAlign,testBaseline
+</blockquote>
+<span> font属性——设置或返回画布上文本内容的当前字体属性。font属性使用的语法与 CSS font属性相同。</span><span> 语法：context.font="italic small-caps bold 12px arial";即context.font = "font-style&nbsp; font-variant&nbsp; font-weight&nbsp; font-size font-family"。</span> 
+<p>
+	
+</p>
+<p>
+	<span>textAlign——textAlign属性根据锚点，设置或返回文本内容的当前对齐方式。通常，文本会从指定位置开始，不过，如果设置为 textAlign="right" 并将文本放置到位置 150，那么会在位置150结束。使用fillText()或strokeText()方法在画布上实际地绘制并定位文本。</span><span> 语法：context.textAlign="center|end|left|right|start";start(默认)和left相同，文本在指定的位置开始；end和right相同，文本在指定的位置结束。</span><span> textBaseline——属性设置或返回在绘制文本时的当前文本基线。</span><span> 语法：context.textBaseline="alphabetic|top|hanging|middle|ideographic|bottom";</span><span> 属性值和示意图：</span> 
+</p>
+<span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/14_font.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/14_font.html" target="_blank">新窗口查看效果:</a>)</span> 
+<iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/14_font.html" frameborder="0">
+</iframe>
+<blockquote>
+	2、fillText,strokeText,measureText
+</blockquote>
+<span> fillText()——方法在画布上绘制填色的文本。文本的默认颜色是黑色。使用 font 属性来定义字体和字号，并使用 fillStyle 属性以另一种颜色/渐变来渲染文本。</span><span> 语法：context.fillText(text,x,y,maxWidth);text是在画布上输出的文本，x,y是绘制文本的起点坐标，为左上角，maxWidth可选，允许的最大文本宽度，像素计算。</span><span> strokeText—— 方法在画布上绘制文本（无填充色）。文本的默认颜色是黑色。使用 font 属性来定义字体和字号，并使用 strokeStyle 属性以另一种颜色/渐变来渲染文本。</span><span> 语法：context.fillText(text,x,y,maxWidth);text是在画布上输出的文本，x,y是绘制文本的起点坐标，为左上角，maxWidth可选，允许的最大文本宽度，像素计算。</span><span> measureText()——方法返回一个对象，该对象包含以像素计的指定字体宽度。如果需要在文本向画布输出之前，就了解文本的宽度，那么请使用该方法。</span><span> 语法：context.measureText(text).width;</span><span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/15_fillstrokeText.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/15_fillstrokeText.html" target="_blank">新窗口查看效果:</a>)</span>
+<iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/15_fillstrokeText.html" frameborder="0">
+</iframe>
+<h2>
+	三、总结
+</h2>
+<span> 我们在绘图时，应当先写状态属性，再创建路径，然后再绘制图形。记得使用save()和restore()保存和返回之前的状态。如果你觉得写出来的结果和预期不太一样，你可以看看是不是没有开启新的路径，试试beginPath()。示例代码：</span> 
+<pre class="prettyprint lang-js">// 保存状态
+ctx.save();
+ // 先写状态
+ctx.beginPath();
+ ctx.lineWidth = 5;
+ ctx.strokeStyle = 'red'
+ ctx.shadowBlur = 10;
+ ctx.shadowColor = 'blue';
+ // 再创建路径
+ctx.moveTo(50, 50);
+ ctx.lineTo(50, 100);
+ ctx.lineTo(100, 60);
+ ctx.closePath();
+ // 最后把之前的状态绘制出来
+ctx.stroke();
+ // 恢复到save()之前的状态
+ctx.restore();</pre>
