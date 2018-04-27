@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<canvas id="superCanvas" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<script type="text/javascript">
+			window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 400;
+				cvs.height = 400;
+				// 开始你的精彩表演......
+				var ctx = cvs.getContext('2d');
+				
+				// 填充纯颜色
+				ctx.fillStyle="#FF0000";
+				ctx.rect(10,10,100,100);
+				ctx.stroke();
+				ctx.fill();
+		</script>
+	</body>
+</html>

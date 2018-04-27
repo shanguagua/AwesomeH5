@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<canvas id="superCanvas" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<script type="text/javascript">
+			window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 400;
+				cvs.height = 400;
+				// 开始你的精彩表演
+				var ctx = cvs.getContext('2d');
+				ctx.font="italic small-caps bold 50px arial";
+				
+				ctx.save();
+				ctx.fillText('山呱呱',20,60,200);
+				ctx.restore();
+				
+				ctx.save();
+				var lineGradient = ctx.createLinearGradient(20,20,200,200);
+				lineGradient.addColorStop(0,'red');
+				lineGradient.addColorStop(0.5,'blue');
+				lineGradient.addColorStop(1,'yellow');
+				ctx.fillStyle = lineGradient;
+				ctx.fillText('山呱呱',20,160,200); 
+				ctx.restore();
+				
+				ctx.save();
+				ctx.strokeStyle = lineGradient;
+				ctx.strokeText('山呱呱',20,260,200);
+				ctx.restore();
+				
+				ctx.save();
+				ctx.font="italic small-caps bold 30px arial";
+				var txt = 'www.shanzhonglei.com'
+				ctx.strokeStyle = lineGradient;
+				ctx.strokeText('山呱呱的宽度为：'+ctx.measureText(txt).width,20,320,400);
+				ctx.restore();
+			}
+		</script>
+	</body>
+</html>;

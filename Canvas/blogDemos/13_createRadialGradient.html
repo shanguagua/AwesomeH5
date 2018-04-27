@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<canvas id="superCanvas" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<img id="flower" src="images/flower.png"/>
+		<script type="text/javascript">
+			window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 400;
+				cvs.height = 400;
+				// 开始你的精彩表演......
+				var ctx = cvs.getContext('2d');
+				
+				// 第一个图形
+				ctx.save();
+				ctx.beginPath();
+				ctx.strokeStyle = 'red';  
+				ctx.lineWidth =1;  
+				var radia3 = ctx.createRadialGradient(70,70,20,100,100,200);
+				radia3.addColorStop(0,'red');
+				radia3.addColorStop(0.5,'green');
+				radia3.addColorStop(1,'blue');
+				ctx.rect(20,20,100,100);
+				ctx.fillStyle = radia3;
+				ctx.stroke();
+				ctx.fill();
+				ctx.restore();  
+				
+				ctx.save();
+				ctx.beginPath();
+				var radia2 = ctx.createRadialGradient(240,120,20,380,20,200);
+				radia2.addColorStop(0,'gold')
+				radia2.addColorStop(0.5,'blue');
+				radia2.addColorStop(1,'yellow');
+				ctx.fillStyle = radia2;
+				ctx.moveTo(240,120);
+				ctx.lineTo(380,120);
+				ctx.lineTo(380,20);
+				ctx.closePath();
+				ctx.fill()
+				ctx.stroke();
+				
+				ctx.restore();
+				
+				// 渐变图案边框
+				ctx.save();
+				ctx.beginPath();
+				var radia3 = ctx.createRadialGradient(270,270,100,220,220,200);
+				radia3.addColorStop(0,'red');
+				radia3.addColorStop(0.5,'green');
+				radia3.addColorStop(1,'blue');
+				var flow = document.getElementById('flower');
+				var pat = ctx.createPattern(flow,'repeat');
+				ctx.strokeStyle = radia3;
+				ctx.fillStyle = pat;
+				ctx.lineWidth = 60;
+				ctx.rect(190,190,160,160);
+				ctx.fill()
+				ctx.stroke()
+				ctx.restore();
+			}
+		</script>
+	</body>
+</html>

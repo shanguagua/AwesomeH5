@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<canvas id="superCanvas" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<img id="flower" src="images/flower.png"/>
+		<script type="text/javascript">
+			window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 400;
+				cvs.height = 400;
+				// 开始你的精彩表演......
+				var ctx = cvs.getContext('2d');
+				
+				ctx.save();
+				// 金色边框
+				ctx.beginPath();
+				ctx.strokeStyle="gold";
+				ctx.lineWidth=10;
+				ctx.strokeRect(10,10,100,100);
+				ctx.restore();
+				
+				// 画一封闭的三角形
+				ctx.save();
+				ctx.moveTo(120,10);
+				ctx.lineTo(200,10);
+				ctx.lineTo(200,60);
+				ctx.fill()
+				ctx.restore();
+				
+				// 渐变色边框
+				ctx.save();
+				var h_gradient = ctx.createLinearGradient(0,0,400,400);
+				h_gradient.addColorStop(0,'white');
+				h_gradient.addColorStop(0.4,'gold');
+				h_gradient.addColorStop(0.6,'blue');
+				h_gradient.addColorStop(0.8,'red');
+				h_gradient.addColorStop(1,'black');
+				ctx.strokeStyle = h_gradient;
+				ctx.lineWidth=16;
+				ctx.strokeRect(100,150,100,100);
+				ctx.restore();
+				
+				// 渐变图案边框
+				ctx.save();
+				var flow = document.getElementById('flower');
+				var pat = ctx.createPattern(flow,'repeat');
+				ctx.lineWidth = 20;
+				ctx.strokeStyle = pat;
+				ctx.strokeRect(250,150,100,100);
+				ctx.restore();
+				
+				// 渐变文字
+				ctx.save()
+				ctx.font="50px Verdana";
+				ctx.strokeStyle = h_gradient;
+				ctx.strokeText('山呱呱',20,330,300)
+				ctx.strokeText('www.shanzhonglei.com',20,380,300)
+				ctx.restore();
+				
+				
+				
+			}
+			
+			
+				
+		</script>
+	</body>
+</html>

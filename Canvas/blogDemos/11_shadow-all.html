@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<canvas id="superCanvas" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<script type="text/javascript">
+			window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 400;
+				cvs.height = 400;  
+				// 开始你的精彩表演......
+				var ctx = cvs.getContext('2d');
+				
+				//  第一个阴影
+				// 保存状态
+				ctx.save();
+				// 先写状态
+				ctx.beginPath();
+				ctx.lineWidth = 5;
+				ctx.strokeStyle = 'red'
+				ctx.shadowBlur = 10;
+				ctx.shadowColor = 'blue';
+				// 再创建路径
+				ctx.moveTo(50,50);
+				ctx.lineTo(50,100);
+				ctx.lineTo(100,60);
+				ctx.closePath();	
+				// 最后把之前的状态绘制出来
+				ctx.stroke();
+				// 恢复到save()之前的状态
+				ctx.restore();
+				
+				// 再画一个矩形的阴影吧
+				ctx.save();
+				ctx.beginPath();
+				ctx.fillStyle = 'gold';
+				ctx.shadowBlur = 5;
+				ctx.shadowColor = 'forestgreen'
+				ctx.shadowOffsetX = 5;
+				ctx.shadowOffsetY = 5;
+				ctx.lineWidth = 5;
+				ctx.strokeStyle = 'red';
+				ctx.rect(150,150,100,100);
+				ctx.fill()
+				ctx.stroke();
+				ctx.restore();
+				
+				// 再再画一个矩形
+				ctx.save();
+				ctx.beginPath();
+				ctx.fillStyle = 'fuchsia';
+				ctx.shadowBlur = 5;
+				ctx.shadowColor = 'forestgreen'
+				ctx.shadowOffsetX =-5;
+				ctx.shadowOffsetY = -5;
+				ctx.lineWidth = 5;
+				ctx.strokeStyle = 'red';
+				ctx.rect(280,280,100,100);
+				ctx.stroke();
+				ctx.fill()
+				ctx.restore();
+			}
+			
+			
+				
+		</script>
+	</body>
+</html>

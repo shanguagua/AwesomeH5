@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<canvas id="superCanvas" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<canvas id="superCanvas2" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<img id="flower" src="images/flower.png"/>
+		<script type="text/javascript">
+			window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 400;
+				cvs.height = 400;
+				// 开始你的精彩表演......
+				var ctx = cvs.getContext('2d');
+				
+				// 填充纯颜色
+				ctx.fillStyle="#FF0000";
+				ctx.rect(10,10,100,100);
+				ctx.stroke();   // 绘制边框
+				ctx.fill(); // 填充颜色
+				
+				// 填充垂直渐变色
+				var v_gradient = ctx.createLinearGradient(0,0,0,400); // 创建渐变对象
+				v_gradient.addColorStop(0,'red');
+				v_gradient.addColorStop(0.5,'yellow');
+				v_gradient.addColorStop(0.7,'gold');
+				v_gradient.addColorStop(1,'green');
+				// 将创建的渐变对象复制给fillStyle,来执行绘制操作
+				ctx.fillStyle= v_gradient;
+				ctx.fillRect(120,120,100,100);
+				
+				// 填充水平渐变色
+				var h_gradient = ctx.createLinearGradient(0,0,400,0);
+				h_gradient.addColorStop(0,'red');
+				h_gradient.addColorStop(0.5,'yellow');
+				h_gradient.addColorStop(0.7,'gold');
+				h_gradient.addColorStop(1,'green');
+				ctx.fillStyle = h_gradient;
+				ctx.fillRect(240,240,100,100);
+				
+				// 填充图片
+				var cvs1 = document.getElementById('superCanvas2');
+				if(!cvs1.getContext) return;
+				cvs1.width =400;
+				cvs1.height = 400;
+				// 开始你的精彩表演......
+				var ctx1 = cvs1.getContext('2d');
+				
+				// 创建填充对象
+				var bimg = document.getElementById('flower');
+				var pat = ctx1.createPattern(bimg,'repeat');
+				ctx1.fillStyle = pat;   
+				//ctx1.fillRect(0,0,400,400)
+				ctx1.fillRect(0,0,cvs1.width,cvs1.height)
+			}
+			
+			
+				
+		</script>
+	</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<canvas id="superCanvas" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<script type="text/javascript">
+			window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 600;
+				cvs.height = 600;
+				// 开始你的精彩表演......
+				
+				// font
+				var ctx = cvs.getContext('2d');
+				ctx.font="italic small-caps bold 20px arial";
+				ctx.save();
+				ctx.fillText("Font:",10,50);
+				ctx.fillStyle = 'blue'
+				ctx.fillText("www.shanzhonglei.com",60,50);
+				ctx.fillStyle = 'red'
+				ctx.fillText("山呱呱",280,50);
+				ctx.restore();
+				
+				
+				// textAlign
+				ctx.save();
+				ctx.font="italic small-caps bold 20px arial";
+				ctx.fillText("textAlign:",10,100);
+				ctx.moveTo(280,100);
+				ctx.lineTo(280,300);
+				
+				//	测试
+				ctx.font="normal small-caps bold 20px arial";
+				ctx.fillStyle = 'blue';
+				ctx.textAlign = 'start';
+				ctx.fillText('山呱呱(textAlign=start)',280,126);
+				ctx.textAlign= 'end';
+				ctx.fillText('山呱呱(textAlign=end)',280,156);
+				ctx.textAlign = 'center';
+				ctx.fillText('山呱呱(textAlign=center)',280,186);
+				ctx.textAlign = 'left';
+				ctx.fillText('山呱呱(textAlign=left)',280,216);
+				ctx.textAlign = 'right';
+				ctx.fillText('山呱呱(textAlign=lerightft)',280,246);
+				ctx.stroke();
+				ctx.restore();
+				
+				// textBaseline
+				ctx.beginPath()
+				ctx.font="italic small-caps bold 20px arial";
+				ctx.fillText("textBaseline :",10,340);				
+				ctx.moveTo(10,420);
+				ctx.lineTo(590,420);				
+				ctx.stroke()
+				// 测试
+				ctx.font="normal small-caps bold 20px arial";
+				ctx.fillStyle = 'darkturquoise';
+				ctx.textBaseline='top';
+				ctx.fillText('山(Top)',16,420)
+				ctx.textBaseline='bottom';
+				ctx.fillText('山(Bottom)',100,420);
+				ctx.textBaseline='middle';
+				ctx.fillText('山(Middle)',220,420);
+				ctx.textBaseline='alphabetic';
+				ctx.fillText('山(Alphabetic)',330,420);  
+				ctx.textBaseline='hanging';
+				ctx.fillText('山(Hanging)',470,420);
+			}
+		</script>
+	</body>
+</html>;
