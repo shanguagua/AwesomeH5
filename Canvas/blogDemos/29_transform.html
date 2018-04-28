@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<canvas id="superCanvas" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<script type="text/javascript">
+			window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 600;
+				cvs.height = 700;
+				// 开始你的精彩表演
+				var ctx = cvs.getContext('2d');
+				ctx.lineWidth = 1;
+				var deg = Math.PI/180;
+				ctx.font="italic small-caps bold 20px arial";
+				
+				
+				ctx.save();  
+				ctx.fillStyle = 'blue'
+				ctx.fillRect(20,20,130,130);
+				ctx.restore();
+				// 水平,垂直移动
+				ctx.save();  
+				ctx.transform(1,0,0,1,200,0); 
+				ctx.fillStyle= 'red';
+				ctx.fillRect(20,20,130,130); // 在原来的绘图位置水平移动了150
+				ctx.fillStyle='yellow'
+				ctx.transform(1,0,0,1,0,150); 
+				ctx.fillRect(20,20,130,130); // 在原来绘图位置垂直移动了150，说明transform的变换是会叠加的。
+				ctx.restore();
+				
+				// 旋转
+				ctx.save();
+				ctx.fillStyle='greenyellow'
+				ctx.transform(Math.cos(45*deg),Math.sin(45*deg),-Math.sin(45*deg),Math.cos(45*deg),0,100)
+				ctx.fillRect(160,0,130,130);  // 矩形绕着原点旋转了45度
+				ctx.restore();
+				
+				// 缩放
+				ctx.save();
+				ctx.fillStyle = 'salmon';
+				ctx.translate(300,350); // 重置原点坐标
+				ctx.fillRect(0,0,50,50);
+				ctx.transform(2,0,0,1,80,0); // 水平放大两倍,并且平移80
+				ctx.fillRect(0,0,100,100);
+				ctx.restore();
+				
+				// 拉伸skew
+				ctx.save();
+				ctx.fillStyle = 'skyblue';
+				ctx.translate(60,420); // 重置原点坐标
+				ctx.fillRect(0,0,100,100);
+				ctx.fillStyle = 'sandybrown';
+				ctx.transform(1,Math.tan(Math.PI*30/180),Math.tan(Math.PI*30/180),1,0,0);
+				ctx.fillRect(0,0,100,100);
+				ctx.restore();
+				
+				// setTransform的使用
+				ctx.save();
+				ctx.fillStyle = 'lawngreen';
+				ctx.translate(280,500); // 重置原点坐标
+				ctx.fillRect(0,0,100,100);
+				ctx.fillStyle = 'skyblue';
+				ctx.transform(Math.cos(45*deg),Math.sin(45*deg),-Math.sin(45*deg),Math.cos(45*deg),0,0)
+				ctx.fillRect(0,0,100,100);
+				ctx.fillStyle = 'darkgoldenrod';
+				ctx.setTransform(1,0,0,1,100,0);
+				ctx.translate(280,500); // 重置原点坐标
+				ctx.fillRect(0,0,100,100);
+				ctx.restore();
+				
+				// 注释   
+				ctx.fillStyle='black'
+				ctx.fillText('原始图',50,90);
+				ctx.fillText('旋转',80,320);
+				ctx.fillText('水平平移',240,80);
+				ctx.fillText('原始图,竖直平移，叠加之前的水平平移',160,200);
+				ctx.fillText('拉伸原始图',60,450);
+				ctx.fillText('setTranform',280,550);
+				
+				ctx.fillText('缩放原始图',280,380);
+			}
+		</script>
+	</body>
+</html>;

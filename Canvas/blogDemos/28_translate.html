@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<canvas id="superCanvas" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<img id="flower" width="100" alt="花" src="../src/images/cat.jpg"/>
+		<script type="text/javascript">
+			window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 400;
+				cvs.height = 600;
+				// 开始你的精彩表演
+				var ctx = cvs.getContext('2d');
+				ctx.lineWidth = 1;
+				
+				// 绘制一张图片
+				var flower = document.getElementById('flower');
+				ctx.drawImage(flower,20,20,160,160);
+				
+				// 修改原点坐标后，使用相同的参数绘制图片
+				ctx.save();
+				ctx.translate(20,220);
+				ctx.drawImage(flower,20,20,160,160);
+				ctx.restore();
+				
+				// 修改原点坐标后，使用相同的参数绘制图片
+				ctx.save();
+				ctx.translate(200,400);
+				ctx.drawImage(flower,20,20,160,160);
+				ctx.restore();
+				
+				ctx.stroke();
+				ctx.restore();
+				
+			}
+		</script>
+	</body>
+</html>;

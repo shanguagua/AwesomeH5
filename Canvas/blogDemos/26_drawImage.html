@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<canvas id="superCanvas" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<img id="flower" width="100" alt="花" src="../src/images/flow.jpg"/>
+		<video id="video" controls width="270" autoplay>
+		    <source src="../src/images/animal.mp4" type='video/mp4'>
+		    <source src="../src/images/animal.ogg" type='video/ogg'>
+		    <source src="../src/images/animal.webm" type='video/webm'>
+		</video>
+		<script type="text/javascript">
+			window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 400;
+				cvs.height = 600;
+				// 开始你的精彩表演
+				var ctx = cvs.getContext('2d');
+				ctx.lineWidth = 1;
+				
+				// 绘制一张图片，并规定图片的尺寸
+				var flower = document.getElementById('flower');
+				ctx.drawImage(flower,100,20,200,200)
+				
+				// 裁剪图片
+				ctx.drawImage(flower,50,50,100,100,150,250,100,100)
+				
+				// 绘制视频
+				//		绘制边框
+				ctx.strokeStyle = 'blue';
+				ctx.lineWidth = 6;
+				ctx.strokeRect(70,380,260,125)
+				var video = document.getElementById('video');
+				video.addEventListener('play',function(){
+					var time = window.setInterval(function() {ctx.drawImage(video,70,380,260,125)},30);
+				},false)
+				video.addEventListener('pause',function(){
+					window.clearInterval(time)
+				})
+				
+				ctx.stroke();
+				ctx.restore();
+				
+			}
+		</script>
+	</body>
+</html>;

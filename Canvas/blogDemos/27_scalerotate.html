@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<canvas id="superCanvas" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<img id="flower" width="100" alt="花" src="../src/images/flow.jpg"/>
+		<video id="video" controls width="270" autoplay>
+		    <source src="../src/images/animal.mp4" type='video/mp4'>
+		    <source src="../src/images/animal.ogg" type='video/ogg'>
+		    <source src="../src/images/animal.webm" type='video/webm'>
+		</video>
+		<script type="text/javascript">
+			window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 400;
+				cvs.height = 600;
+				// 开始你的精彩表演
+				var ctx = cvs.getContext('2d');
+				ctx.lineWidth = 1;
+				
+				// 绘制一张图片，并规定图片的尺寸
+				var flower = document.getElementById('flower');
+				ctx.drawImage(flower,20,20,50,50);
+				
+				// 图片放大处理,放大两倍，注意要保存状态
+				ctx.save();
+				ctx.scale(2,2);
+				ctx.drawImage(flower,40,40,50,50);
+				ctx.restore();
+				
+				// 旋转放大图片
+				ctx.save();
+				ctx.rotate(30*Math.PI/180);
+				ctx.scale(3,3);
+				ctx.drawImage(flower,110,20,50,50);
+				ctx.restore();
+				
+				ctx.stroke();
+				ctx.restore();
+				
+			}
+		</script>
+	</body>
+</html>;

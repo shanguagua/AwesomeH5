@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<canvas id="superCanvas" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<script type="text/javascript">
+			window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 400;
+				cvs.height = 400;
+				// 开始你的精彩表演
+				var ctx = cvs.getContext('2d');
+				ctx.lineWidth = 1;
+				// 现在需要绘制三条线段
+				// 不使用beginPath的情况,可以看出，三条颜色都是一样的。
+				ctx.save();
+				ctx.fillStyle = 'blue';
+				ctx.strokeStyle = 'goldenrod';
+				ctx.font="normal small-caps bold 20px arial";
+				ctx.rect(100,30,150,150)
+				
+				ctx.fillText("点(150,150)在区域内么？"+ctx.isPointInPath(150,150),100,220)
+				ctx.fillText("点(300,300)在区域内么？"+ctx.isPointInPath(300,300),100,260)
+				
+				ctx.stroke();
+				ctx.restore();
+				
+			}
+		</script>
+	</body>
+</html>;
