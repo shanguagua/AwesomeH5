@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+			<canvas id="superCanvas" style="border:1px solid #aaa;">
+        </canvas>
+		<script type="text/javascript">
+			window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 300;
+				cvs.height = 300;
+				var ctx = cvs.getContext('2d');
+				
+				ctx.fillStyle = 'blue';
+				ctx.fillRect(10,10,100,100);
+				
+				ctx.globalAlpha = 0.6;
+				ctx.fillRect(120,120,60,60);
+				
+				ctx.globalAlpha = 0.3;
+				ctx.fillRect(200,200,60,60);
+				ctx.fillStyle = 'red'
+				ctx.fillRect(260,260,20,20)
+			}  
+		</script>
+	</body>
+
+</html>;

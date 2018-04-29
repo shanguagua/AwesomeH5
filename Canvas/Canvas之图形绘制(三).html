@@ -1,0 +1,102 @@
+<h2>
+	一、路径
+</h2>
+<span> canvas提供了12种路径相关了API，之前画的都是正方形，有了这些API我们就可以绘制形状多样的图形了。小伙伴们是不是迫不及待了呢，那我们就一一来试一下吧，Come on !</span> 
+<blockquote>
+	1、fill
+</blockquote>
+<span> fill()方法填充当前的图像（路径）。默认颜色是黑色。使用 fillStyle 属性来填充另一种颜色/渐变,如果路径未关闭，那么 fill() 方法会从路径结束点到开始点之间添加一条线，以关闭该路径（正如 closePath() 一样），然后填充该路径。</span> <span> 注意，如果使用fill使路径关闭，那么最后那条路径是没有边框的。</span> <span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/16_fill.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/16_fill.html" target="_blank">新窗口查看效果:</a>)</span><iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/16_fill.html" frameborder="0">
+</iframe>
+<blockquote>
+	2、stroke
+</blockquote>
+<span> stroke()方法会实际地绘制出通过 moveTo() 和 lineTo() 方法定义的路径。默认颜色是黑色。</span> <span> 再次提醒，Canvas是基于状态绘图的，lineTo,fillStyle等API都是状态，是‘我要绘制一条直线’，但是并没有实际的绘图，我们需要使用stroke来实际的画图。</span> <span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/17_stroke.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/17_stroke.html" target="_blank">新窗口查看效果:</a>)</span><iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/17_stroke.html" frameborder="0">
+</iframe>
+<blockquote>
+	3、beginPath
+</blockquote>
+<span> beginPath()方法开始一条路径，或重置当前的路径。创建路径可以使用moveTo()、lineTo()、quadricCurveTo()、bezierCurveTo()、arcTo()和 arc()。使用 stroke()方法在画布上绘制确切的路径。</span> <span> 注意，不管你用moveTo把画笔移动到哪里，只要不beginPath，那你一直都是在画一条路径,fillRect与strokeRect这种直接画出独立区域的函数，也不会打断当前的path.如果你画出的图形和你想像的不一样，记得查看是否有合理的beginPath。请仔细看代码！</span> <span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/18_beginPath.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/18_beginPath.html" target="_blank">新窗口查看效果:</a>)</span><iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/18_beginPath.html" frameborder="0">
+</iframe>
+<blockquote>
+	4、moveTo，closePath，lineTo
+</blockquote>
+<span> moveTo() 方法把路径移动到画布中的指定点，不创建线条。closePath() 方法创建从当前点到开始点的路径，注意最后一条线段是没有边框的。lineTo() 方法添加一个新点，然后创建从该点到画布中最后指定点的线条（该方法并不会创建线条）。</span> <span> 注意，这三个方法都是状态，需要使用stroke()来进行实际的图形绘制。</span><span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/19_moveToClosePathLinePath.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/19_moveToClosePathLinePath.html" target="_blank">新窗口查看效果:</a>)</span><iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/19_moveToClosePathLinePath.html" frameborder="0">
+</iframe>
+<blockquote>
+	5、clip
+</blockquote>
+<span> clip()方法从原始画布中剪切任意形状和尺寸。意思就是把画布的可视区域显示在了所绘制的区域内。一旦剪切了某个区域，则所有之后的绘图都会被限制在被剪切的区域内（不能访问画布上的其他区域）。您也可以在使用 clip() 方法前通过使用 save() 方法对当前画布区域进行保存，并在以后的任意时间对其进行恢复（通过 restore() 方法）。</span> <span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/20_clip.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/20_clip.html" target="_blank">新窗口查看效果:</a>)</span><iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/20_clip.html" frameborder="0">
+</iframe>
+<blockquote>
+	6、quadraticCurveTo
+</blockquote>
+<span> quadraticCurveTo() 方法通过使用表示二次贝塞尔曲线的指定控制点，向当前路径添加一个点。二次贝塞尔曲线需要两个点。第一个点是用于二次贝塞尔计算中的控制点，第二个点是曲线的结束点。曲线的开始点是当前路径中最后一个点。如果路径不存在，那么请使用beginPath()和moveTo()方法来定义开始点。</span> <span> 注意开始点事由beginPath()或moveTo()方法来确定的，控制点与其余两点的连线是曲线的切线。这个也是创建了路径，并没有真正的绘制图形。</span> <span> 语法：context.quadraticCurveTo(cpx,cpy,x,y);cpx,cpy为控制点，x,y为结束点。</span> 二次三次贝塞尔曲线生成工具<a href="https://shanguagua.github.io/AwesomeH5/Canvas/src/Canvas%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E7%BB%98%E5%9B%BE%E5%B7%A5%E5%85%B7/Canvas%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E7%BB%98%E5%9B%BE%E5%B7%A5%E5%85%B7.html" target="_blank">&lt;&lt;&lt;——山呱呱传送们——&gt;&gt;&gt;</a></span> <span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/21_quadraticCurveTo.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/21_quadraticCurveTo.html" target="_blank">新窗口查看效果:</a>)</span><iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/21_quadraticCurveTo.html" frameborder="0">
+</iframe>
+<blockquote>
+	7、bezierCurveTo
+</blockquote>
+<span> bezierCurveTo()方法通过使用表示三次贝塞尔曲线的指定控制点，向当前路径添加一个点。三次贝塞尔曲线需要三个点。前两个点是用于三次贝塞尔计算中的控制点，第三个点是曲线的结束点。曲线的开始点是当前路径中最后一个点。如果路径不存在，那么请使用 beginPath()和moveTo()方法来定义开始点。</span> <span> 语法：context.bezierCurveTo(cp1x,cp1y,cp2x,cp2y,x,y);cp1x,cp1y为第一个控制点，cp2x,cp2y为第二个控制点，x,y为结束点。</span>二次三次贝塞尔曲线生成工具<a href="https://shanguagua.github.io/AwesomeH5/Canvas/src/Canvas%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E7%BB%98%E5%9B%BE%E5%B7%A5%E5%85%B7/Canvas%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E7%BB%98%E5%9B%BE%E5%B7%A5%E5%85%B7.html" target="_blank">&lt;&lt;&lt;——山呱呱传送们——&gt;&gt;&gt;</a></span><span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/22_bezierCurveTo.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/22_bezierCurveTo.html" target="_blank">新窗口查看效果:</a>)</span><iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/22_bezierCurveTo.html" frameborder="0">
+</iframe>
+<blockquote>
+	8、arc
+</blockquote>
+<span> arc() 方法创建弧/曲线（用于创建圆或部分圆），如需通过 arc() 来创建圆，请把起始角设置为 0，结束角设置为 2*Math.PI，单位为弧度制。</span> <span> 语法：context.arc(x,y,r,sAngle,eAngle,counterclockwise);x,y为圆中心坐标，r为圆的半径，sAngle为起始角，eAngle为结束角，counterclockwise为False表示顺时针，true为逆时针。</span> <span> 注意，默认为顺时针，还需要注意向下向右为正方向。2π为一个圆周角。</span> <span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/23_arc.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/23_arc.html" target="_blank">新窗口查看效果:</a>)</span><iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/23_arc.html" frameborder="0">
+</iframe>
+<blockquote>
+	9、arcTo
+</blockquote>
+<span> arcTo() 方法在画布上创建介于两个切线之间的弧/曲线。Opera 不支持 arcTo() 方法。最不好用的就是arcTo这个API了，很不好控制。</span> <span> 语法：context.arcTo(x1,y1,x2,y2,r);x1,y1为弧的起点，x2,y2为圆弧的终点，r为弧半径。&nbsp;</span> <span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/24_arcTo.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/24_arcTo.html" target="_blank">新窗口查看效果:</a>)</span><iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/24_arcTo.html" frameborder="0">
+</iframe>
+<blockquote>
+	10、isPointInPath
+</blockquote>
+<span> 如果指定的点位于当前路径中，isPointInPath() 方法返回 true，否则返回 false。可以用于canvas交互！</span> <span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/25_isPointInPath.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/25_isPointInPath.html" target="_blank">新窗口查看效果:</a>)</span><iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/25_isPointInPath.html" frameborder="0">
+</iframe>
+<h2>
+	二、图像绘制
+</h2>
+<span> drawImage可以很好的来处理图像、视频的需求。特别是处理视频这个，山呱呱很喜欢的哦~~~</span> <span> drawImage在画布上绘制图像、画布或视频，同时也能够绘制图像的某些部分，以及/或者增加或减少图像的尺寸。</span> <span> 在画布上定位图像语法：context.drawImage(img,x,y);</span> <span> 在画布上定位图像语法：context.drawImage(img,x,y,width,height);</span> <span> 剪切图像，并在画布上定位被剪切的部分：context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);</span> <span> 参数值介绍：</span> <img src="https://www.shanzhonglei.com/wp-content/uploads/2018/04/rotate1.jpg" alt="" width="630" height="374" class="aligncenter size-full wp-image-2707" /><span> 说了这么多，还是直接看代码比较容易理解的。 这个功能还有很多妙用哦！</span> <span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/26_drawImage.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/26_drawImage.html" target="_blank">新窗口查看效果:</a>)</span><iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/26_drawImage.html" frameborder="0">
+</iframe>
+<h2>
+	三、转换
+</h2>
+<span> 图像变换可以更加方便的实现图像绘制和动画的效果。</span> 
+<blockquote>
+	1、scale,rotate
+</blockquote>
+<span> scale()方法缩放当前绘图至更大或更小。注意，如果对绘图进行缩放，所有之后的绘图也会被缩放。定位也会被缩放。如果您 scale(2,2)，那么绘图将定位于距离画布左上角两倍远的位置。</span> <span> 语法：context.scale(scalewidth,scaleheight);scalewidth为缩放当前绘图的宽度，scaleheight为缩放当前绘图的高度。</span> <span> rotate()方法旋转当前的绘图，注意旋转只会影响到旋转完成后的绘图。</span> <span> 语法：context.rotate(angle);旋转角度，以弧度计。如需将角度转换为弧度，请使用 degrees*Math.PI/180 公式进行计算。</span> <span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/27_scalerotate.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/27_scalerotate.html" target="_blank">新窗口查看效果:</a>)</span><iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/27_scalerotate.html" frameborder="0">
+</iframe>
+<blockquote>
+	2、translate
+</blockquote>
+<span> 这个api就厉害了，它能重新映射画布上的 (0,0) 位置。说白了就是重新设置画布的原点。</span> <span> 语法：context.translate(x,y);x为移动后原点的x坐标，y为移动后圆点的y坐标。</span> <span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/28_translate.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/28_translate.html" target="_blank">新窗口查看效果:</a>)</span><iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/28_translate.html" frameborder="0">
+</iframe>
+<blockquote>
+	3、transform,setTransform
+</blockquote>
+<span> 画布上的每个对象都拥有一个当前的变换矩阵。transform() 方法替换当前的变换矩阵。transform() 允许您缩放、旋转、移动并倾斜当前的环境。setTransform与transform使用方法一样，只是它会重置之前的变换矩阵为单位矩阵，然后再transform,也就是之前的变换不会对这次变换产生影响。</span> <span> 语法：context.transform(a,b,c,d,e,f);</span> <span> 它以下面描述的矩阵来操作当前的变换矩阵:</span> <img src="https://www.shanzhonglei.com/wp-content/uploads/2018/04/rotate2.jpg" alt="" width="641" height="376" class="aligncenter size-full wp-image-2708" /><span> 参数说明：</span> <img src="https://www.shanzhonglei.com/wp-content/uploads/2018/04/rotate3.jpg" alt="" width="701" height="272" class="aligncenter size-full wp-image-2709" /><span> 这个API是有点复杂的，它能够实现平移，旋转，缩放以及拉伸，推到公式有些许复杂，我们先记住结论：</span> <span> transform()只会影响transform()方法调用之后的绘图。transform()方法的行为相对于由rotate()、scale()、translate()或transform()完成的其他变换。</span> 
+<ol>
+	<li>
+		<span>如果需要平移(move)，context.transform(1,0,0,1,e,f)</span> 
+	</li>
+	<li>
+		<span>如果需要旋转(rotate)，transform(Math.cos(45*deg),Math.sin(45*deg),-Math.sin(45*deg),Math.cos(45*deg),100,100)，代表图形绕原点顺时针旋转了45deg且做了平移。</span> 
+	</li>
+	<li>
+		<span>如果需要缩放(scale)，使用context.transform(a,0,0,d,0,0)，a,d为水平垂直缩放的比例。</span> 
+	</li>
+	<li>
+		<span>如果需要拉伸(skew)，使用context.transform(1,Math.tan(Math.PI*30/180),Math.tan(Math.PI*40/180),1,100,100);</span> 
+	</li>
+	<li>
+		<span>先平移，然后水平拉伸30度，垂直拉伸45度。</span> 
+	</li>
+	<li>
+		<span>transform如果既有平移又有旋转、拉伸等，则先平移后做其他操作。</span> 
+	</li>
+	<li>
+		<span>注意setTransform不仅会重置单位矩阵，而且还会重置原点坐标。</span> 
+	</li>
+</ol>
+<span>示例(<a href="https://github.com/shanguagua/AwesomeH5/blob/master/Canvas/blogDemos/29_transform.html" target="_blank">源码</a>&lt;————&gt;<a href="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/29_transform.html" target="_blank">新窗口查看效果:</a>)</span><iframe width="100%" height="330" src="https://shanguagua.github.io/AwesomeH5/Canvas/blogDemos/29_transform.html" frameborder="0">
+</iframe>

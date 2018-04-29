@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div style="margin: 20px auto; width:900px;">
+			<canvas id="canvasa" width="400" height="400" style="display:block;float:left;border:1px solid #aaa;">
+        </canvas>
+
+			<canvas id="canvasb" width="400" height="400" style="display:block;float:right;border:1px solid #aaa;">
+        </canvas>
+		</div>
+		<div style="clear: both"></div>
+
+		<div style="text-align: center; margin-top:50px;font-size:20px;">
+			<a href="javascript:filter()">滤镜</a>
+		</div>
+		<script type="text/javascript">
+			
+			var canvasa = document.getElementById("canvasa");
+	        var contexta = canvasa.getContext("2d");
+	
+	        var canvasb = document.getElementById("canvasb");
+	        var contextb = canvasb.getContext("2d");
+	        
+	        var image = new Image();
+	        window.onload = function(){
+	        	image.src = 'images/autumn.jpg';
+	        	image.onload = function(){
+	        		contexta.drawImage(image,0,0,canvasa.width,canvasa.height)
+	        	}
+	        }
+	        function filter(){
+	        	var imageData  = contexta.getImageData(0,0,canvasa.width,canvasa.height);
+	        	var pixelData = imageData.data; // 获取imageData的数据
+
+				for (var i =0;i<pixelData.length;i+=4) {
+					pixelData[i+0] = 0;
+//					pixelData[i+1] = 255;
+//					pixelData[i+2] = 0;
+//	        		pixelData[i+3] = 100;
+				}
+				
+	        	contextb.putImageData(imageData,0,0,0,0,canvasb.width,canvasb.height)
+	        }
+		</script>
+	</body>
+
+</html>;
