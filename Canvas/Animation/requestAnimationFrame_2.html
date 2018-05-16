@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>requestAnimationFrame动画实践</title>
+		<style>
+			
+		</style>
+	</head>
+
+	<body>
+		<canvas id="superCanvas" style="border: 1px solid gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+	</body>
+	<script type="text/javascript" src="../src/js/requestAnimationFrame.js"></script>
+	<script>
+		window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 520;
+				cvs.height = 520;
+				var context = cvs.getContext('2d');
+				context.translate(250,250);
+				context.strokeStyle = "red";  //设置描边样式
+				
+				// 设置初始值
+				radian = 0,   //设置初始弧度
+            	radian_add = Math.PI/60;  //设置弧度增量
+				context.moveTo(getX(radian),getY(radian)); //移动绘图游标至原点
+				
+				(function drawFrame() {
+					var timer = window.requestAnimationFrame(drawFrame);
+					radian += radian_add;
+					X = getX(radian);
+		            Y = getY(radian);
+		            context.lineTo(X,Y);
+					context.stroke();  //对路径描边
+
+					if(radian > (Math.PI*2)){
+						cancelAnimationFrame(timer);
+					}
+					
+				}())
+				
+				function getX(t){   //获取玫瑰线的X坐标
+				    return 100 * Math.sin(4*t)*Math.cos(t);
+				}
+				
+				function getY(t){  //获取玫瑰线的Y坐标
+				    return 100 * Math.sin(4*t)*Math.sin(t);
+				}
+
+		}
+		</script>
+	</script>
+
+</html>

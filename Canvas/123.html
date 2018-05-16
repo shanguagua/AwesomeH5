@@ -1,88 +1,120 @@
-<h2>
-	一、像素操作
-</h2>
-<span> Canvas给我们提供了操作像素的API，这样我们可以对每一个像素进行处理，可以更精细的处理图片。</span> 
-<blockquote>
-	1、createImageData
-</blockquote>
-<span> 这个方法可以创建一个空白的ImageData对象，默认是背景色透明白色，这个ImageData对象有宽度width和高度height，里面有width*height个像素点，我们操作的就是这些像素点。对于ImageData对象中的每个像素，都存在着四方面的信息，即RGBA值：</span> 
-<ol>
-	<li>
-		<span>R - 红色（0-255）</span> 
-	</li>
-	<li>
-		<span>G - 绿色（0-255</span> 
-	</li>
-	<li>
-		<span>B - 蓝色（0-255）</span> 
-	</li>
-	<li>
-		<span>A - alpha 通道（0-255; 0 是透明的，255 是完全可见的）</span> 
-	</li>
-</ol>
-<span> 那么黑色的RGBA就是(0,0,0,0),其实每个像素点就是一盏灯，由RGBA来控制灯的颜色和明亮程度。一个宽度为width,高度为height的ImageData对象有width*height个像素点，而每个像素点有四个信息组成，那么如何来表示这些信息呢？</span> <span> 山呱呱就来告诉你吧，敲黑板哦！这些像素点以及像素点的四条信息是存放在一个一位数组里面的，数组中每四个元素就表示了一个像素的信息。那么这个数组的长度length就是width*height*4,同时也有一个方法可以获取这个数组的长度ImageDataObject.data.length。这样我们就能准确的处理每个像素的RGBA值了，是不是很激动呢！</span> <span> 再提一下，ImageData是一块块小方块，这些小方块就代表一各个像素</span> <span> 比如：把第一个像素值设为红色，第二个像素值设为绿色,可以这样操作：</span> 
-<pre class="prettyprint lang-js">imgData = ctx.createImageData(100, 100);
- // 第一个像素设为红色
-imgData.data[0] = 255;
- imgData.data[1] = 0;
- imgData.data[2] = 0;
- imgData.data[3] = 255;
- // 第二个像素设为绿色
-imgData.data[4] = 0;
- imgData.data[5] = 255;
- imgData.data[6] = 0;
- imgData.data[7] = 255;</pre>
-<img src="https://www.shanzhonglei.com/wp-content/uploads/2018/04/canvas4_1-1024x519.jpg" alt="" width="1024" height="519" class="aligncenter size-large wp-image-2729" /> 
 <p>
-	<span>语法1：var imgData=context.createImageData(width,height);以指定的尺寸（以像素计）创建新的 ImageData 对象。</span> <span> 语法2：var imgData=context.createImageData(imageData);创建与指定的另一个 ImageData对象尺寸相同的新ImageData对象（不会复制图像数据）。</span> 
+	<h2>问题来源</h2><br />
+<span>在前端开发过程中，获取数据需要请求API接口或是请求本地的数据文件。之前的vue-cli脚手架版本提供了dev-server.js，可以把请求数据的服务写在里面，然而最新版本的vue-cli并没有dev-derver.js。查阅相关文档发现，我们可以把数据请求服务写在webpack.dev.conf.js的devServer配置中。</span><br />
+<blockquote>旧版vue-cli数据服务</blockquote><br />
+<span>在const app=express()服务开启之后，在const compiler = webpack(webpackConfig)之前添加我们的数据服务。</span>
 </p>
-<img src="https://www.shanzhonglei.com/wp-content/uploads/2018/04/canvas4_2.jpg" alt="" width="696" height="155" class="aligncenter size-full wp-image-2730" /> 
 <p>
-	<span>知道了其中原理，我们就可以很轻松的来操作元素了，下面两种循环遍历像素对象属性的方法都是可以了：</span> 
-</p>
-<pre class="prettyprint lang-js">var imageData = contexta.getImageData(0, 0, canvas.width, canvas.height);
- var pixelData = imageData.data; // 获取imageData的数据
-for (var i = 0; i &lt; canvasb.width * canvasb.height; i++) {
-     pixelData[4 * i + 0] = 0;
-     pixelData[4 * i + 1] = 255;
-     pixelData[4 * i + 2] = 0;
-     pixelData[4 * i + 3] = 100;
- }
+<pre class="prettyprint lang-js">let appData = require('../data.json');
+let seller = appData.seller;
+let goods = appData.goods;
+let ratings = appData.ratings;
 
-for (var i = 0; i &lt; pixelData.length; i += 4) {
-     pixelData[i + 0] = 0;
-     pixelData[i + 1] = 255;
-     pixelData[i + 2] = 0;
-     pixelData[i + 3] = 100;
- }
+let apiRoutes = express.Router();
+
+apiRoutes.get('/seller',function(req,res){
+  res.json({
+    errno: 0,
+    data: seller
+  })
+});
+
+apiRoutes.get('/goods',function(req,res){
+  res.json({
+    errno: 0,
+    data: goods
+  })
+});
+
+apiRoutes.get('/ratings',function(req,res){
+  res.json({
+    errno: 0,
+    data: ratings
+  })
+}); 
+
+app.use('/api', apiRoutes);
 </pre>
-<span> 示例(源码&lt;————&gt;新窗口查看效果):30_createImageData.html</span> 
-<blockquote>
-	2、getImageData和putImageData
-</blockquote>
-<span> getImageData()方法返回 ImageData 对象，该对象拷贝了画布指定矩形的像素数据。值得注意的是，该ImageData对象不是图像，它规定了画布上的一部分(矩形)，并保存了该矩形内每一个像素的信息，所有像素的信息都存放在ImageData的data属性中，data属性是一个一维数组。</span> <span> 语法：context.getImageData(x,y,width,height)</span> <img src="https://www.shanzhonglei.com/wp-content/uploads/2018/04/canvas4_3.jpg" alt="" width="693" height="192" class="aligncenter size-full wp-image-2731" /> 
-<p>
-	<span>putImageData()方法将图像数据（从指定的ImageData 对象）放回画布上。</span> <span> 语法：context.putImageData(imgData,dx,dy,dirtyX,dirtyY,dirtyWidth,dirtyHeight);</span> 
+<br />
+<blockquote>新版vue-cli数据服务</blockquote><br />
+<span>在const portfinder = require('portfinder')获取相关数据，然后在devServer配置中添加before钩子函数。devServer配置中可以直接请求API接口。</span><br />
+<pre class="prettyprint lang-js">const portfinder = require('portfinder')
+// 加载本地数据
+let appData = require('../data.json'); 
+let seller = appData.seller; 
+let goods = appData.goods;
+let ratings = appData.ratings;</pre>
+<br />
+<span>配置devServer，注意webpack 3内置了express，app就是express()返回的对象。</span><br />
+<pre class="prettyprint lang-js">devServer: {
+  // 写在devServe中即可
+  before(app) {
+      app.get('/api/seller', (req, res) =&gt; {
+              res.json({
+                      errno: 0,
+                      data: seller
+                  }) //接口返回json数据，上面配置的数据seller就赋值给data请求后调用
+          }),
+          app.get('/api/goods', (req, res) =&gt; {
+              res.json({
+                  errno: 0,
+                  data: goods
+              })
+          }),
+          app.get('/api/ratings', (req, res) =&gt; {
+              res.json({
+                  errno: 0,
+                  data: ratings
+              })
+          })
+  }
+}</pre>
+<br />
+<h2>附上上线后的服务</h2>
 </p>
-<img src="https://www.shanzhonglei.com/wp-content/uploads/2018/04/canvas4_4.jpg" alt="" width="697" height="306" class="aligncenter size-full wp-image-2732" /> <img src="https://www.shanzhonglei.com/wp-content/uploads/2018/04/canvas4_5.jpg" alt="" width="699" height="506" class="aligncenter size-full wp-image-2733" /> 
 <p>
-	<span> 可以看出，绘制图像的左上角坐标是dx，dirtyX,dy,dirtyY合成的！！！</span> <span> 此外，imageData还有其它三个属性，width返回 ImageData 对象的宽度，以像素计,height返回 ImageData 对象的高度，以像素计。data返回指定的 ImageData 对象的图像数据，是一个包含所有像素点信息的一维数组。&nbsp; </span> <span> 示例(源码&lt;————&gt;新窗口查看效果):31_putImageData.html</span> 
+<pre class="prettyprint lang-js">const Koa = require('koa');
+const app = new Koa();
+const Router = require('koa-router');
+let router = new Router({
+    prefix: '/api'
+});
+//依赖config做一些配置
+let config = require('./config/index');
+app.use(require('koa-static')(__dirname + '/dist'));
+
+let appData = require('./data.json'); //加载本地数据文件
+let seller = appData.seller; //获取对应的本地数据
+let goods = appData.goods;
+let ratings = appData.ratings;  
+
+router.get('/', (ctx, next) =&gt; {
+    ctx.response.redirect('/index.html');
+    next();
+});
+router.get('/seller', (ctx, next) =&gt; {
+    ctx.response.body = {
+        errno: 0,
+        data: seller 
+    }
+}),
+router.get('/goods', (ctx, next) =&gt; {
+    ctx.response.body = {
+        errno: 0,
+        data: goods
+    }
+}),
+router.get('/ratings', (ctx, next) =&gt; {
+    ctx.response.body = {
+        errno: 0,
+        data: ratings
+    }
+})
+
+app
+  .use(router.routes())
+  .use(router.allowedMethods());
+
+app.listen(config.build.port);
+</pre>
 </p>
-<h2>
-	二、合成
-</h2>
-<blockquote>
-	1、globalAlpha
-</blockquote>
-<span> 设置或返回绘图的当前透明值（alpha或transparency）。它必须是介于 0.0（完全透明） 与 1.0（不透明）之间的数字。</span> <span> 示例(源码&lt;————&gt;新窗口查看效果):31_putImageData.html</span> 
-<blockquote>
-	2、globalAlpha
-</blockquote>
-<span> globalCompositeOperation 属性设置或返回如何将一个源（新的）图像绘制到目标（已有的）的图像上。源图像 = 您打算放置到画布上的绘图。目标图像 = 您已经放置在画布上的绘图！！！！！！！！！！！！</span> <span> 语法：context.globalCompositeOperation="source-in";默认值为source-over.</span> <img src="https://www.shanzhonglei.com/wp-content/uploads/2018/04/canvas4_6.jpg" alt="" width="691" height="448" class="aligncenter size-full wp-image-2734" /> 
-<p>
-	<span>示例(源码&lt;————&gt;新窗口查看效果):32_globalCompositeOperation.html</span> 
-</p>
-<h2>
-	二、其它
-</h2>
-<span> save():保存当前环境的状态。</span> <span> restore():返回之前保存过的路径状态和属性。</span>

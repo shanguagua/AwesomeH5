@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>requestAnimationFrame动画实践</title>
+		<style>
+			.progress-bar {
+				background-color: gold;
+				width: 0;
+				height: 20px;
+				line-height: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="progress-bar" id="progressBar">0%</div>
+		<button id="btn">run</button>
+	</body>
+	<script type="text/javascript" src="../src/js/requestAnimationFrame.js"></script>
+	<script>
+		var timer;
+		btn.onclick = function() {
+			progressBar.style.width = '0';
+			cancelAnimationFrame(timer);
+			timer = requestAnimationFrame(function fn() {
+				if(parseInt(progressBar.style.width) < 500) {
+					progressBar.style.width = parseInt(progressBar.style.width) + 5 + 'px';
+					progressBar.innerHTML = parseInt(progressBar.style.width) / 5 + '%';
+					timer = requestAnimationFrame(fn);
+				} else {
+					cancelAnimationFrame(timer);
+				}
+			});
+		}
+	</script>
+
+</html>
