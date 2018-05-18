@@ -7,6 +7,7 @@
 
 	<body>  
 		<canvas id="superCanvas" style="border: 3px dotted gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<button id="reload">重新开始</button>
 	</body>
 	<script type="text/javascript" src="../src/js/physical/axis.js" ></script>
 	<script type="text/javascript" src="../src/js/physical/ball.js" ></script>
@@ -51,6 +52,11 @@
 						cancelAnimationFrame(timer);
 					}
 				}())
+				
+				var refresh = document.getElementById('reload');
+				refresh.onclick = function(){
+					location.reload();
+				}
 		}
 	</script>
 
