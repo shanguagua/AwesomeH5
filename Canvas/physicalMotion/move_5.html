@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>自由落体运动</title>
+	</head>
+
+	<body>
+		<canvas id="superCanvas" style="border: 3px dotted gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<button id="reload">重新开始</button>
+	</body>
+	<script type="text/javascript" src="../src/js/physical/axis.js" ></script>
+	<script type="text/javascript" src="../src/js/physical/ball.js" ></script>
+	<script type="text/javascript" src="../src/js/requestAnimationFrame.js"></script>
+	<script>
+		window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 800;
+				cvs.height = 300;
+				var ctx = cvs.getContext('2d');
+				
+				var xAxis = 400;
+				var yAxis = 150;	 		
+				// 设置新的坐标原点
+				ctx.translate(xAxis,yAxis);     
+				// 绘制坐标轴
+				var axis = new Axis(xAxis,yAxis,280,120,true,true,'gold');
+				axis.draw(ctx);
+				
+				// 山呱呱开始表演
+				
+				// 圆周运动
+				var ball_1 = new Ball(10,'blue','');  
+				ball_1.draw(ctx);
+				var r = 100;                                      
+				var angle = 0;
+                
+				(function drawFrame() {
+					var timer = window.requestAnimationFrame(drawFrame);
+					ctx.clearRect(-xAxis, -yAxis, cvs.width, cvs.height);
+					
+					angle+=0.05
+					ball_1.x = r*Math.sin(angle);
+					ball_1.y = r*Math.cos(angle);
+					ball_1.draw(ctx)
+					axis.draw(ctx);
+					
+				}());
+				
+				var refresh = document.getElementById('reload');
+				refresh.onclick = function(){
+					location.reload();
+				}
+		}
+	</script>
+
+</html>

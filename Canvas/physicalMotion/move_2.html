@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>匀，加，变速运动</title>
+	</head>
+
+	<body>  
+		<canvas id="superCanvas" style="border: 3px dotted gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<button id="reload">重新开始</button>
+	</body>
+	<script type="text/javascript" src="../src/js/physical/axis.js" ></script>
+	<script type="text/javascript" src="../src/js/physical/ball.js" ></script>
+	<script type="text/javascript" src="../src/js/requestAnimationFrame.js"></script>
+	<script>
+		window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 800;
+				cvs.height = 300;
+				var ctx = cvs.getContext('2d');
+				
+				var xAxis = 50;
+				var yAxis = 150;			
+				// 设置新的坐标原点
+				ctx.translate(xAxis,yAxis);     
+				// 绘制坐标轴
+				var axis = new Axis(xAxis,yAxis,680,110,false,true,'gold');
+				axis.draw(ctx); 
+				
+				// 山呱呱开始表演
+				
+				// 匀加速运动
+				var ball_1 = new Ball(20,'gold','加');  
+				ball_1.draw(ctx);
+				// 初始速度
+				var vx_1 = 0;
+                var vy_1 = 0;
+                // 速度增量
+                var ax_1= 0.2;
+                var ay_1 = 0.01;
+                
+                // 匀减速运动
+                var ball_2 = new Ball(20,'blue','减');
+                ball_2.draw(ctx);
+                // 初始速度
+                var vx_2 = 16;
+                var vy_2 = 2.4;
+                // 速度增量
+                var ax_2= -0.2;
+                var ay_2 = -0.03;
+				
+				var t1 = new Date();
+				(function drawFrame() {
+					var timer = window.requestAnimationFrame(drawFrame);
+					ctx.clearRect(-xAxis, -yAxis, cvs.width, cvs.height);
+					
+					vx_1 += ax_1;
+					vy_1 += ay_1;
+					ball_1.x+= vx_1+0.5*ax_1;
+					ball_1.y+= vy_1+0.5*ay_1;
+					ball_1.draw(ctx);
+					
+					vx_2 += ax_2;
+					vy_2 += ay_2;
+					ball_2.x+= vx_2+0.5*ax_2;
+					ball_2.y+= vy_2+0.5*ay_2;
+					ball_2.draw(ctx);
+					
+					
+					axis.draw(ctx); 
+					
+					// 如果x轴方向运动超过了650px则停止
+					if(vx_2 < 0){
+						var t2 = new Date();
+						
+						var del = (t2-t1)/1000;
+						
+						cancelAnimationFrame(timer);
+						console.log(del)
+						console.log(vx_1)
+						console.log(vy_1)
+					}
+				}());
+				
+				var refresh = document.getElementById('reload');
+				refresh.onclick = function(){
+					location.reload();
+				}
+		}
+	</script>
+
+</html>

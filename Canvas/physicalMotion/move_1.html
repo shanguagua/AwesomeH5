@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>匀速直线运动</title>
+	</head>
+
+	<body>  
+		<canvas id="superCanvas" style="border: 3px dotted gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+	</body>
+	<script type="text/javascript" src="../src/js/physical/axis.js" ></script>
+	<script type="text/javascript" src="../src/js/physical/ball.js" ></script>
+	<script type="text/javascript" src="../src/js/requestAnimationFrame.js"></script>
+	<script>
+		window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 800;
+				cvs.height = 300;
+				var ctx = cvs.getContext('2d');
+				
+				var xAxis = 50;
+				var yAxis = 150;			
+				// 设置新的坐标原点
+				ctx.translate(xAxis,yAxis);     
+				// 绘制坐标轴
+				var axis = new Axis(xAxis,yAxis,680,110,false,true,'gold');
+				axis.draw(ctx); 
+				
+				// 山呱呱开始表演
+				var guagua_ball = new Ball(20,'gold','山'); 
+				var shan_ball = new Ball(18,'blue','呱');
+				guagua_ball.draw(ctx);
+				shan_ball.draw(ctx);
+				
+				(function drawFrame() {
+					var timer = window.requestAnimationFrame(drawFrame);
+					ctx.clearRect(-xAxis, -yAxis, cvs.width, cvs.height);
+					
+					guagua_ball.x+=6;
+					guagua_ball.draw(ctx);
+					
+					shan_ball.x+=3;
+					shan_ball.y+=1;
+					shan_ball.draw(ctx);
+					
+					axis.draw(ctx); 
+					
+					// 如果x轴方向运动超过了650px则停止
+					if(guagua_ball.x > 650){
+						cancelAnimationFrame(timer);
+					}
+				}())
+		}
+	</script>
+
+</html>

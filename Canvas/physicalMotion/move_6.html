@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>自由落体运动</title>
+	</head>
+
+	<body>
+		<canvas id="superCanvas" style="border: 3px dotted gold;">您的浏览器不支持canvas,请升级你的浏览器</canvas>
+		<button id="reload">重新开始</button>
+	</body>
+	<script type="text/javascript" src="../src/js/physical/axis.js" ></script>
+	<script type="text/javascript" src="../src/js/physical/ball.js" ></script>
+	<script type="text/javascript" src="../src/js/requestAnimationFrame.js"></script>
+	<script>
+		window.onload = function() {
+				var cvs = document.getElementById('superCanvas');
+				if(!cvs.getContext) return;
+				cvs.width = 800;
+				cvs.height = 300;
+				var ctx = cvs.getContext('2d');
+				
+				var xAxis = 50;
+				var yAxis = 50;	 		
+				// 设置新的坐标原点
+				ctx.translate(xAxis,yAxis);     
+				// 绘制坐标轴
+				var axis = new Axis(xAxis,yAxis,500,210,false,false,'gold');
+				axis.draw(ctx);
+				
+				// 山呱呱开始表演
+				
+				// 绘制地面
+				var groundLine = 200;
+				function drawGround (){
+					ctx.save();
+					ctx.beginPath();
+					ctx.moveTo(0,groundLine);
+					ctx.lineTo(530,groundLine);
+					ctx.strokeText('200px——大地',540,202);
+					ctx.stroke()
+					ctx.restore();
+				}
+				drawGround()
+				
+				//定义反弹系数
+                var bounce = -0.8;
+				// 检测小球是否与大地相撞
+                function checkHit(ball){
+                	if(ball.y+ball.radius > groundLine){
+                		// 重新设置小球的状态
+                		ball.y = groundLine-ball.radius;
+                		// 碰撞后，小球反向运动，速度为原来的bounce
+                		vy *=bounce
+                	}   
+                }
+				
+				// 水平抛物线运动
+				var ball = new Ball(10,'blue','呱'); 
+				// 初始速度
+				var vx = 2;
+                var vy = 0;
+                // 速度增量
+                var ax= 0;
+                var ay = 0.2; 
+				ball.draw(ctx);
+                
+				(function drawFrame() {
+					var timer = window.requestAnimationFrame(drawFrame);
+					ctx.clearRect(-xAxis, -yAxis, cvs.width, cvs.height);
+					
+					
+					ball.x += vx;
+					vy += ay;
+					ball.y += vy;
+					
+					ball.draw(ctx)
+					
+					checkHit(ball)
+					drawGround()
+					axis.draw(ctx);
+					
+					if(ball.x > 450){
+						cancelAnimationFrame(timer);
+					}
+				}());
+				
+				var refresh = document.getElementById('reload');
+				refresh.onclick = function(){
+					location.reload(timer);
+				}
+		}
+	</script>
+
+</html>

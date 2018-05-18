@@ -26,8 +26,8 @@
 			cancelAnimationFrame(timer);
 			timer = requestAnimationFrame(function fn() {
 				if(parseInt(progressBar.style.width) < 500) {
-					progressBar.style.width = parseInt(progressBar.style.width) + 5 + 'px';
-					progressBar.innerHTML = parseInt(progressBar.style.width) / 5 + '%';
+					progressBar.style.width = parseInt(progressBar.style.width) + 10 + 'px';
+					progressBar.innerHTML = parseInt(progressBar.style.width) / 10 + '%';
 					timer = requestAnimationFrame(fn);
 				} else {
 					cancelAnimationFrame(timer);
